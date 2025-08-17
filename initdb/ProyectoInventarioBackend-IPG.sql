@@ -16,7 +16,7 @@ CREATE TABLE `inventario` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `producto_id` int NOT NULL,
   `cantidad` int NOT NULL DEFAULT 0,
-  `updated_at` datetime DEFAULT (current_timestamp)
+  `actualizado_en` datetime DEFAULT (current_timestamp)
 );
 
 ALTER TABLE `inventario` ADD FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
