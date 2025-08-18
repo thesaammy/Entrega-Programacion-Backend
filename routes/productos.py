@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify,render_template
+from flask import Blueprint, request, jsonify,render_template, redirect, url_for
 from models.productos_model import Productos
 from models.inventario_model import Inventario
 from utils.db import db
@@ -8,6 +8,11 @@ productos_bp = Blueprint('productos', __name__)
 @productos_bp.route("/productos")
 def productos():
     return render_template('registroProducto.html')
+
+@productos_bp.route("/inventario")
+def inventario():
+    productos_list = Productos.query.all()
+    return render_template('inventario.html', productos_list=productos_list )
 
 @productos_bp.route("/productos/crear", methods=["POST"])
 def crear_producto():
@@ -26,20 +31,26 @@ def crear_producto():
     db.session.add(nuevoProducto)
     db.session.commit()
 
-    return f"producto {nombre} creado con {cantidadProducto} unidades "
+    return redirect("/inventario")
 
+@productos_bp.route("/productos/eliminar/<id>")
+def eliminar_producto(id):
+    producto = Productos.query.get(id)
+    db.session.delete(producto)
+    db.session.commit()
 
-@productos_bp.route("/productos/eliminar", methods=["DELETE"])
-def eliminar_producto():
-    # Lógica para eliminar un producto
-    return "Producto eliminado"
+    return redirect(url_for('productos.inventario'))
 
-@productos_bp.route("/productos/actualizar", methods=["PUT"])
-def actualizar_producto():
-    # Lógica para actualizar un producto
-    return "Producto actualizado"
+@productos_bp.route("/productos/actualizar/<id>", methods=["GET", "POST"])
+def actualizar_producto(id):
+    producto = Productos.query.get(id)
+    if request.method == "POST":
+        producto.nombre = request.form['nombre']
+        producto.descripcion = request.form['descripcion']
+        producto.precio = request.form['precio']
+        producto.inventario_rel.cantidad = request.form['cantidad']
 
-@productos_bp.route("/productos/obtener", methods=["GET"])
-def obtener_producto():
-    # Lógica para obtener un producto
-    return "Producto obtenido"
+        db.session.commit()
+        return redirect("/inventario")
+    else:
+        return render_template('actualizarProducto.html', producto=producto)

@@ -7,7 +7,7 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `productos` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
+  `nombre` varchar(100) UNIQUE NOT NULL,
   `descripcion` text,
   `precio` int NOT NULL
 );

@@ -3,7 +3,7 @@ from utils.db import db
 
 class Productos(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(100), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False, unique=True)
     descripcion = db.Column(db.Text)
     precio = db.Column(db.Integer, nullable=False)
 

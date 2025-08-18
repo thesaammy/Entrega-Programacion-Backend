@@ -18,9 +18,6 @@ app.register_blueprint(productos_bp)
 def login():
     return render_template('login.html')
 
-
-
-
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
