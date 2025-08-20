@@ -27,4 +27,7 @@ def auth():
         flash("Usuario o contraseña incorrectos", "danger")
         return render_template('login.html')
 
-    
+@auth_bp.route('/logout')
+def logout():
+    flash("Sesión cerrada exitosamente", "success")
+    return redirect(url_for('login'))

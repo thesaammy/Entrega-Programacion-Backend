@@ -1,6 +1,7 @@
 from flask import Blueprint, request,render_template, redirect, url_for, flash
 from models.productos_model import Productos
 from models.inventario_model import Inventario
+from sqlalchemy.exc import IntegrityError
 from utils.db import db
 
 productos_bp = Blueprint('productos', __name__)
@@ -26,10 +27,14 @@ def crear_producto():
     nuevoProducto.inventario_rel = Inventario(cantidad=cantidadProducto)
 
     #Guardar el objeto en db
-    db.session.add(nuevoProducto)
-    db.session.commit()
+    try:
+        db.session.add(nuevoProducto)
+        db.session.commit()
+        flash("Producto creado exitosamente", "success")
+    except IntegrityError:
+        db.session.rollback()
+        flash(f"El producto '{nombre}' ya existe", "danger")
 
-    flash("Producto creado exitosamente", "success")
     return redirect("/inventario")
 
 @productos_bp.route("/productos/eliminar/<id>")
@@ -51,6 +56,7 @@ def actualizar_producto(id):
         producto.inventario_rel.cantidad = request.form['cantidad']
 
         db.session.commit()
+        flash(f"Producto '{producto.nombre}' actualizado exitosamente", "success")
         return redirect("/inventario")
     else:
         return render_template('actualizarProducto.html', producto=producto)
