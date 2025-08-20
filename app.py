@@ -1,10 +1,12 @@
 from flask import Flask, render_template
 from routes.productos import productos_bp
 from routes.usuarios import usuarios_bp
+from routes.auth import auth_bp
 from utils.db import db
 from config import Config
 
 app = Flask(__name__)
+app.secret_key = 'flash4501'
 
 ## Configuración
 app.config.from_object(Config)
@@ -15,6 +17,7 @@ db.init_app(app)
 #registro de blueprint
 app.register_blueprint(productos_bp)
 app.register_blueprint(usuarios_bp)
+app.register_blueprint(auth_bp)
 
 @app.route('/')
 def login():

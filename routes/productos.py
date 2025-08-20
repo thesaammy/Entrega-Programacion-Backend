@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify,render_template, redirect, url_for
+from flask import Blueprint, request,render_template, redirect, url_for, flash
 from models.productos_model import Productos
 from models.inventario_model import Inventario
 from utils.db import db
@@ -29,6 +29,7 @@ def crear_producto():
     db.session.add(nuevoProducto)
     db.session.commit()
 
+    flash("Producto creado exitosamente", "success")
     return redirect("/inventario")
 
 @productos_bp.route("/productos/eliminar/<id>")
@@ -36,6 +37,7 @@ def eliminar_producto(id):
     producto = Productos.query.get(id)
     db.session.delete(producto)
     db.session.commit()
+    flash("Producto eliminado exitosamente", "success")
 
     return redirect(url_for('productos.inventario'))
 
