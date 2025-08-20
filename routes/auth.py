@@ -1,7 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for,flash
-import hashlib
 from models.usuarios_model import Usuarios
-from utils.db import db
+import hashlib
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -12,7 +11,7 @@ def auth():
 
     if " " in username:
         flash("No se permiten los espacios en Usuario", "danger")
-        return render_template('login.html')
+        return redirect(url_for('inventario'))
 
     # Crear hash de password
     password = hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -22,10 +21,10 @@ def auth():
 
     if usuario:
         flash("Inicio de sesión exitoso", "success")
-        return redirect(url_for('inventario'))
+        return redirect(url_for('productos.inventario'))
     else:
         flash("Usuario o contraseña incorrectos", "danger")
-        return render_template('login.html')
+        return redirect(url_for('login'))
 
 @auth_bp.route('/logout')
 def logout():
