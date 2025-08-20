@@ -5,15 +5,13 @@ from utils.db import db
 
 productos_bp = Blueprint('productos', __name__)
 
-@productos_bp.route("/productos")
-def productos():
-    return render_template('registroProducto.html')
-
 @productos_bp.route("/inventario")
 def inventario():
     productos_list = Productos.query.all()
-    return render_template('inventario.html', productos_list=productos_list )
+    return render_template('app.html', productos_list=productos_list )
 
+
+#Crear, Actualizar y Borrar
 @productos_bp.route("/productos/crear", methods=["POST"])
 def crear_producto():
     nombre = request.form['nombre']

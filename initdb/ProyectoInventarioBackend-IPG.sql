@@ -20,3 +20,6 @@ CREATE TABLE `inventario` (
 );
 
 ALTER TABLE `inventario` ADD FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
+
+INSERT INTO `usuarios` (username, password, rol) VALUES
+('UserAdmin', '2bb762d9735d915a05a65f973c43cae8d0d0a9670499e511ca25b312e45cc2c3', 'admin')
