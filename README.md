@@ -47,7 +47,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 6. Ejecutar con Docker
+### 6. Ejecutar con Docker (es necesario tener abierto docker desktop)
 ```bash
 docker-compose up -d
 ```
