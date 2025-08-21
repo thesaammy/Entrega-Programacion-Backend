@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_jwt_extended import jwt_required
 from routes.productos import productos_bp
 from routes.usuarios import usuarios_bp
 from routes.auth import auth_bp
@@ -29,6 +30,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/aplicacion')
+@jwt_required()
 def inventario():
     return render_template('app.html')
 

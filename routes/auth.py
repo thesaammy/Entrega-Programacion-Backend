@@ -24,7 +24,7 @@ def auth():
     if usuario:
         flash("Inicio de sesión exitoso", "success")
         #Generar token e incluir en cookie
-        access_token = create_access_token(identity=username, additional_claims={"rol": usuario.rol}, expires_delta=timedelta(hours=2))
+        access_token = create_access_token(identity=usuario.id, additional_claims={"rol": usuario.rol}, expires_delta=timedelta(hours=2))
         resp = make_response(redirect(url_for('productos.inventario')))
         set_access_cookies(resp, access_token)
         return resp

@@ -1,4 +1,5 @@
 from flask import Blueprint, request,render_template, redirect, url_for, flash
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from models.usuarios_model import Usuarios
 from utils.db import db
 import hashlib 
@@ -7,12 +8,14 @@ import hashlib
 usuarios_bp = Blueprint('usuarios', __name__)
 
 @usuarios_bp.route('/usuarios')
+@jwt_required()
 def listar_usuarios():
     usuarios_list = Usuarios.query.all()
     return render_template('usuarios.html', usuarios_list=usuarios_list)
 
 #Crear y Borrar
 @usuarios_bp.route('/usuarios/crear', methods=['POST'])
+@jwt_required()
 def crear_usuario():
     username = request.form['username']
     password = request.form['password']
@@ -37,6 +40,7 @@ def crear_usuario():
 
 
 @usuarios_bp.route('/usuarios/eliminar/<id>')
+@jwt_required()
 def eliminar_usuario(id):
     usuario = Usuarios.query.get(id)
     db.session.delete(usuario)
