@@ -1,4 +1,5 @@
-from flask import Blueprint, request, render_template, redirect, url_for,flash
+from flask import Blueprint, request, render_template, redirect, url_for,flash, make_response
+from flask_jwt_extended import set_access_cookies, create_access_token
 from models.usuarios_model import Usuarios
 import hashlib
 
@@ -16,12 +17,16 @@ def auth():
     # Crear hash de password
     password = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-    # Aquí deberías verificar el usuario y la contraseña con la base de datos
+    #Verificación de que existe un registro del usuario
     usuario = Usuarios.query.filter_by(username=username, password=password).first()
 
     if usuario:
         flash("Inicio de sesión exitoso", "success")
-        return redirect(url_for('productos.inventario'))
+        #Generar token e incluir en cookie
+        access_token = create_access_token(identity=username, additional_claims={"rol": usuario.rol})
+        resp = make_response(redirect(url_for('productos.inventario')))
+        set_access_cookies(resp, access_token)
+        return resp
     else:
         flash("Usuario o contraseña incorrectos", "danger")
         return redirect(url_for('login'))

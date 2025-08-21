@@ -1,12 +1,16 @@
 from flask import Flask, render_template
+from flask_jwt_extended import JWTManager
 from routes.productos import productos_bp
 from routes.usuarios import usuarios_bp
 from routes.auth import auth_bp
 from utils.db import db
 from config import Config
+import os
 
 app = Flask(__name__)
-app.secret_key = 'flash4501'
+app.secret_key = os.getenv("APP_SECRET_KEY")
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+jwt = JWTManager(app)
 
 ## Configuración
 app.config.from_object(Config)
