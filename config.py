@@ -8,4 +8,5 @@ class Config:
     #Config de JWT_Manager
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_COOKIE_CSRF_PROTECT = False 
+    JWT_IDENTITY_CLAIM = "uid" 
 

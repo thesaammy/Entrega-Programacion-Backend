@@ -13,7 +13,7 @@ def listar_usuarios():
     claims = get_jwt()                
     if claims.get("rol") != "admin":
         flash("No tienes permiso para acceder a esta página", "danger")
-        return redirect(url_for('inventario'))
+        return redirect(url_for('productos.inventario'))
 
     usuarios_list = Usuarios.query.all()
     return render_template('usuarios.html', usuarios_list=usuarios_list)
@@ -25,8 +25,8 @@ def crear_usuario():
     claims = get_jwt()                
     if claims.get("rol") != "admin":
         flash("No tienes permiso para acceder a esta página", "danger")
-        return redirect(url_for('inventario'))
-    
+        return redirect(url_for('productos.inventario'))
+
     username = request.form['username']
     password = request.form['password']
     rol = request.form['rol']
@@ -53,7 +53,7 @@ def eliminar_usuario(id):
     claims = get_jwt()                
     if claims.get("rol") != "admin":
         flash("No tienes permiso para acceder a esta página", "danger")
-        return redirect(url_for('inventario'))
+        return redirect(url_for('productos.inventario'))
     
     usuario = Usuarios.query.get(id)
     db.session.delete(usuario)
