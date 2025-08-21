@@ -10,8 +10,6 @@ productos_bp = Blueprint('productos', __name__)
 @productos_bp.route("/inventario")
 @jwt_required()
 def inventario():
-    id_usuario = get_jwt_identity()
-    claims = get_jwt()
     productos_list = Productos.query.all()
     return render_template('app.html', productos_list=productos_list )
 

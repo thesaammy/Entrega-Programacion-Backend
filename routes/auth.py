@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for,flash, make_response
-from flask_jwt_extended import set_access_cookies, create_access_token
+from flask_jwt_extended import set_access_cookies, create_access_token, unset_jwt_cookies
 from models.usuarios_model import Usuarios
 import hashlib
 from datetime import timedelta
@@ -34,5 +34,7 @@ def auth():
 
 @auth_bp.route('/logout')
 def logout():
+    resp = make_response(redirect(url_for('login')))
+    unset_jwt_cookies(resp)
     flash("Sesión cerrada exitosamente", "success")
-    return redirect(url_for('login'))
+    return resp

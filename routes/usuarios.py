@@ -10,6 +10,11 @@ usuarios_bp = Blueprint('usuarios', __name__)
 @usuarios_bp.route('/usuarios')
 @jwt_required()
 def listar_usuarios():
+    claims = get_jwt()                
+    if claims.get("rol") != "admin":
+        flash("No tienes permiso para acceder a esta página", "danger")
+        return redirect(url_for('inventario'))
+
     usuarios_list = Usuarios.query.all()
     return render_template('usuarios.html', usuarios_list=usuarios_list)
 
@@ -17,12 +22,15 @@ def listar_usuarios():
 @usuarios_bp.route('/usuarios/crear', methods=['POST'])
 @jwt_required()
 def crear_usuario():
+    claims = get_jwt()                
+    if claims.get("rol") != "admin":
+        flash("No tienes permiso para acceder a esta página", "danger")
+        return redirect(url_for('inventario'))
+    
     username = request.form['username']
     password = request.form['password']
     rol = request.form['rol']
-    
-    print(username)
-    #Validar espacio
+
     if " " in username:
         flash("No se permiten los espacios en Usuario", "danger")
         return redirect(url_for('usuarios.listar_usuarios'))
@@ -42,6 +50,11 @@ def crear_usuario():
 @usuarios_bp.route('/usuarios/eliminar/<id>')
 @jwt_required()
 def eliminar_usuario(id):
+    claims = get_jwt()                
+    if claims.get("rol") != "admin":
+        flash("No tienes permiso para acceder a esta página", "danger")
+        return redirect(url_for('inventario'))
+    
     usuario = Usuarios.query.get(id)
     db.session.delete(usuario)
     db.session.commit()    
