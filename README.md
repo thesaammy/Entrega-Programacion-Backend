@@ -1,6 +1,14 @@
 # Entrega-Programacion-Backend
 Proyecto básico curso: PROGRAMACIÓN BACKEND 2025
 
+Estimado profesor, debo admitir que no logre dedicarle el tiempo que me gustaría haberle dedicado a esta entrega, por temas del trabajo que me consumieron horas y animos fuera de horario.
+
+Pese a ello siento que mi proyecto se encuentra completo con algun que otro detalle en el código, algun que otro criterio que quizás no cumpla. Por eso le pido que por favor cualquier tipo de feedback o sugerencia, se lo agradecería.
+
+En el proyecto utilice Docker para la base de datos de prueba para este proyecto, las credenciales se encuentran en el .env (sé que es mala practica pero es por tema de agilizar la entrega del proyecto)
+
+A continuación los detalles de instalación y ejecución de forma breve
+
 ## Requisitos
 - Python 3.8+
 - Docker
