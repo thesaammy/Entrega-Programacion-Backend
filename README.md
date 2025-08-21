@@ -59,5 +59,5 @@ flask run
 
 ## Acceso
 - Aplicación: http://localhost:5000
-- Base de datos: Puerto 3306
+- Base de datos: Puerto 3306(desde docker, en local se expone por 3307)
 - Credenciales: Archivo .env
