@@ -54,7 +54,7 @@ docker-compose up -d
 
 ### 7. Ejecutar aplicación
 ```bash
-python app.py
+flask run
 ```
 
 ## Acceso
